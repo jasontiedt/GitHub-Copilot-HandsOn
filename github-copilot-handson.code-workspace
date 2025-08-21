@@ -1,16 +1,16 @@
 {
   "folders": [
     {
-      "name": "📚 xUnit Testing Lab",
+      "name": "� Copilot Mastery Lab",
+      "path": "./Copilot-Mastery-Lab"
+    },
+    {
+      "name": "� xUnit Testing Lab",
       "path": "./xUnit-AI-Lab"
     },
     {
-      "name": "🔧 Code Fixing Lab", 
+      "name": "� Code Fixing Lab", 
       "path": "./AI-Code-Fixing-Lab"
-    },
-    {
-      "name": "🚀 Copilot Mastery Lab",
-      "path": "./Copilot-Mastery-Lab"
     }
   ],
   "settings": {

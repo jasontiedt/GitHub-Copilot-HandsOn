@@ -4,7 +4,32 @@ This repository contains comprehensive hands-on lab exercises designed to teach 
 
 ## Available Labs
 
-### 1. xUnit Testing with AI (`xUnit-AI-Lab/`)
+### 1. Copilot Mastery Lab (`Copilot-Mastery-Lab/`)
+
+**Objective**: Master GitHub Copilot's different models, interaction modes, and advanced prompting strategies for maximum development effectiveness.
+
+**What you'll learn**:
+- Advanced prompting techniques and strategies
+- When and how to use different Copilot models (GPT-4, Claude, Base Copilot)
+- Effective use of Chat, Edit, and Agent interaction modes
+- Context optimization for better AI responses
+- Workflow integration and productivity optimization
+- Team collaboration strategies with AI assistance
+
+**Key Features**:
+- Comprehensive prompting guide with 6+ different styles
+- Model comparison exercises and decision frameworks
+- Interaction mode mastery with hands-on examples
+- Reusable prompt templates for common scenarios
+- Real-world code examples and playgrounds
+- Quick-start guide with 5-minute to 1-hour learning paths
+
+**Technologies**: 
+- GitHub Copilot (all models and modes)
+- .NET 8.0 for practical examples
+- Comprehensive documentation and templates
+
+### 2. xUnit Testing with AI (`xUnit-AI-Lab/`)
 
 **Objective**: Learn xUnit testing fundamentals while leveraging AI assistance for test creation and development.
 
@@ -26,7 +51,7 @@ This repository contains comprehensive hands-on lab exercises designed to teach 
 - .NET 8.0, xUnit.net 2.6.2, Moq 4.20.70
 - GitHub Copilot integration
 
-### 2. AI-Assisted Code Fixing (`AI-Code-Fixing-Lab/`)
+### 3. AI-Assisted Code Fixing (`AI-Code-Fixing-Lab/`)
 
 **Objective**: Master the art of identifying and fixing problematic code using AI assistance across multiple quality dimensions.
 
@@ -105,15 +130,22 @@ This repository contains comprehensive hands-on lab exercises designed to teach 
    cd aaGitHub-Copilot-HandsOn
    ```
 
-2. **Start with xUnit Testing Lab**:
+2. **Start with Copilot Mastery Lab**:
    ```bash
-   cd xUnit-AI-Lab
+   cd Copilot-Mastery-Lab
+   cd src && dotnet restore && dotnet build
+   # Follow the QUICK-START.md guide for learning paths
+   ```
+
+3. **Apply skills with xUnit Testing Lab**:
+   ```bash
+   cd ../../xUnit-AI-Lab
    dotnet restore
    dotnet build
    dotnet test
    ```
 
-3. **Progress to Code Fixing Lab**:
+4. **Advanced practice with Code Fixing Lab**:
    ```bash
    cd ../AI-Code-Fixing-Lab
    dotnet restore
@@ -121,18 +153,11 @@ This repository contains comprehensive hands-on lab exercises designed to teach 
    # Note: Expect warnings - they're intentional for the learning experience!
    ```
 
-4. **Master Copilot Usage**:
-   ```bash
-   cd ../Copilot-Mastery-Lab
-   cd src && dotnet restore && dotnet build
-   # Follow the QUICK-START.md guide for learning paths
-   ```
-
 ### Lab Progression Recommendation
 
-1. **Begin with xUnit-AI-Lab**: Master AI-assisted testing
-2. **Advance to AI-Code-Fixing-Lab**: Apply AI to code quality improvement  
-3. **Master with Copilot-Mastery-Lab**: Become an expert at using Copilot effectively
+1. **Begin with Copilot-Mastery-Lab**: Master AI-assisted development fundamentals
+2. **Apply with xUnit-AI-Lab**: Use your new skills for AI-assisted testing  
+3. **Advance with AI-Code-Fixing-Lab**: Apply AI to complex code quality improvement
 4. **Practice integration**: Use all skills together in real projects
 
 ## Key Learning Outcomes

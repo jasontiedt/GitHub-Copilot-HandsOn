@@ -67,3 +67,10 @@ Copilot-Mastery-Lab/
 4. **Advanced Workflows** (20 minutes)
 
 Ready to become a Copilot master? Let's begin! 🚀
+
+## Next Steps in Your Learning Journey
+
+After mastering this lab, continue with:
+1. **`../xUnit-AI-Lab`** - Apply your new AI skills to testing
+2. **`../AI-Code-Fixing-Lab`** - Use AI for complex code quality improvement
+3. **Real projects** - Integrate all skills into your daily development workflow

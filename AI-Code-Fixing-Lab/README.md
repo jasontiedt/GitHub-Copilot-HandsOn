@@ -14,6 +14,7 @@ By the end of this lab, you will:
 - .NET 8.0 SDK installed
 - Visual Studio Code with C# extension
 - GitHub Copilot or similar AI assistant enabled
+- **Recommended**: Complete the `Copilot-Mastery-Lab` first to learn effective AI prompting strategies
 
 ## 🏗️ Lab Structure
 
@@ -152,6 +153,7 @@ Update `LegacyCode.cs`:
 
 ## 🏁 Next Steps
 After completing this lab, try:
+- **Apply your skills**: Use your AI and code quality knowledge in real-world projects
 - Static analysis tools (SonarQube, CodeQL)
 - Performance profiling
 - Security scanning tools

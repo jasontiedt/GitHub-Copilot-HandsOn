@@ -13,6 +13,7 @@ By the end of this lab, you will:
 - .NET 8.0 SDK installed
 - Visual Studio Code with C# extension
 - GitHub Copilot enabled
+- **Recommended**: Complete the `Copilot-Mastery-Lab` first to learn effective AI prompting techniques
 
 ## 🏗️ Lab Structure
 
@@ -121,6 +122,7 @@ In `tests/Library.Tests/WeatherServiceTests.cs`, learn to test code with externa
 
 ## 🏁 Next Steps
 After completing this lab, try:
+- **Recommended Next Lab**: `../AI-Code-Fixing-Lab` - Apply your AI and testing skills to fix problematic code
 - Integration testing
 - Performance testing
 - Property-based testing with FsCheck
