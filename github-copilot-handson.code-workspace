@@ -1,0 +1,41 @@
+{
+  "folders": [
+    {
+      "name": "📚 xUnit Testing Lab",
+      "path": "./xUnit-AI-Lab"
+    },
+    {
+      "name": "🔧 Code Fixing Lab", 
+      "path": "./AI-Code-Fixing-Lab"
+    },
+    {
+      "name": "🚀 Copilot Mastery Lab",
+      "path": "./Copilot-Mastery-Lab"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/bin": true,
+      "**/obj": true,
+      "**/.vs": true
+    },
+    "dotnetAcquisition.enableTelemetry": false,
+    "github.copilot.enable": {
+      "*": true,
+      "plaintext": false,
+      "markdown": true
+    },
+    "github.copilot.advanced": {
+      "length": 500,
+      "temperature": 0.1
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-dotnettools.csharp",
+      "ms-dotnettools.csdevkit",
+      "GitHub.copilot",
+      "GitHub.copilot-chat"
+    ]
+  }
+}

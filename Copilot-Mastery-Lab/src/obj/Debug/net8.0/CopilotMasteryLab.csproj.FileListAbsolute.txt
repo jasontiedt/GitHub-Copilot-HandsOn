@@ -1,0 +1,13 @@
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\obj\Debug\net8.0\CopilotMasteryLab.csproj.AssemblyReference.cache
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\obj\Debug\net8.0\CopilotMasteryLab.GeneratedMSBuildEditorConfig.editorconfig
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\obj\Debug\net8.0\CopilotMasteryLab.AssemblyInfoInputs.cache
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\obj\Debug\net8.0\CopilotMasteryLab.AssemblyInfo.cs
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\obj\Debug\net8.0\CopilotMasteryLab.csproj.CoreCompileInputs.cache
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\obj\Debug\net8.0\CopilotMasteryLab.sourcelink.json
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\bin\Debug\net8.0\CopilotMasteryLab.deps.json
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\bin\Debug\net8.0\CopilotMasteryLab.dll
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\bin\Debug\net8.0\CopilotMasteryLab.pdb
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\obj\Debug\net8.0\CopilotMasteryLab.dll
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\obj\Debug\net8.0\refint\CopilotMasteryLab.dll
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\obj\Debug\net8.0\CopilotMasteryLab.pdb
+c:\GitRepos\aa-Copilot-Demos\aaGitHub-Copilot-HandsOn\Copilot-Mastery-Lab\src\obj\Debug\net8.0\ref\CopilotMasteryLab.dll

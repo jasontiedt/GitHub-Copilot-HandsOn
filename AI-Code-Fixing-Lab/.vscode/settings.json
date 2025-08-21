@@ -1,0 +1,29 @@
+{
+    "dotnet.defaultSolution": "AI-Code-Fixing-Lab.sln",
+    "files.exclude": {
+        "**/bin": true,
+        "**/obj": true,
+        "**/docs/solution-examples.md": true
+    },
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit",
+        "source.fixAll": "explicit"
+    },
+    "dotnet.codeLens.enableReferencesCodeLens": true,
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "editor.rulers": [120],
+    "files.associations": {
+        "*.cs": "csharp"
+    },
+    "csharp.semanticHighlighting.enabled": true,
+    "extensions.recommendations": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
+    ],
+    "problems.decorations.enabled": true,
+    "editor.lightbulb.enabled": "on"
+}

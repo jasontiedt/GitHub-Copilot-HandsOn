@@ -1,0 +1,20 @@
+{
+    "dotnet.defaultSolution": "xUnit-AI-Lab.sln",
+    "files.exclude": {
+        "**/bin": true,
+        "**/obj": true
+    },
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "dotnet.codeLens.enableReferencesCodeLens": true,
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "extensions.recommendations": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
+    ]
+}

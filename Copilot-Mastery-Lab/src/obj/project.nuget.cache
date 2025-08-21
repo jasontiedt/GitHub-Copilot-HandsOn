@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "aObtzmSTq8w=",
+  "success": true,
+  "projectFilePath": "c:\\GitRepos\\aa-Copilot-Demos\\aaGitHub-Copilot-HandsOn\\Copilot-Mastery-Lab\\src\\CopilotMasteryLab.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jasontiedt\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\jasontiedt\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\jasontiedt\\.nuget\\packages\\system.componentmodel.annotations\\5.0.0\\system.componentmodel.annotations.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
