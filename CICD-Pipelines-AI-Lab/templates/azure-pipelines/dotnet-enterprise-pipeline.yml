@@ -1,0 +1,288 @@
+# Azure DevOps Pipeline Template for .NET Applications
+# This template provides enterprise-grade CI/CD for .NET applications
+# Customize using AI prompts for your specific requirements
+
+trigger:
+  branches:
+    include:
+    - main
+    - develop
+  paths:
+    exclude:
+    - README.md
+    - docs/*
+
+pr:
+  branches:
+    include:
+    - main
+  paths:
+    exclude:
+    - README.md
+    - docs/*
+
+variables:
+  buildConfiguration: 'Release'
+  dotnetSdkVersion: '8.0.x'
+  vmImageName: 'ubuntu-latest'
+  artifactName: 'webapp-drop'
+
+stages:
+- stage: Build
+  displayName: 'Build and Test'
+  jobs:
+  - job: BuildAndTest
+    displayName: 'Build and Test Job'
+    pool:
+      vmImage: $(vmImageName)
+    
+    steps:
+    - checkout: self
+      fetchDepth: 0  # Required for GitVersion and SonarCloud
+    
+    - task: UseDotNet@2
+      displayName: 'Use .NET SDK $(dotnetSdkVersion)'
+      inputs:
+        packageType: 'sdk'
+        version: '$(dotnetSdkVersion)'
+        includePreviewVersions: false
+
+    - task: Cache@2
+      displayName: 'Cache NuGet packages'
+      inputs:
+        key: 'nuget | "$(Agent.OS)" | **/*.csproj'
+        restoreKeys: |
+          nuget | "$(Agent.OS)"
+        path: $(NUGET_PACKAGES)
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore NuGet packages'
+      inputs:
+        command: 'restore'
+        projects: '**/*.csproj'
+        feedsToUse: 'select'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Check code formatting'
+      inputs:
+        command: 'custom'
+        custom: 'format'
+        arguments: '--verify-no-changes --verbosity diagnostic'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build application'
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+        arguments: '--no-restore --configuration $(buildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Run unit tests'
+      inputs:
+        command: 'test'
+        projects: '**/*Tests/*.csproj'
+        arguments: >
+          --no-build 
+          --configuration $(buildConfiguration) 
+          --logger trx 
+          --collect:"XPlat Code Coverage" 
+          --results-directory $(Agent.TempDirectory)/TestResults 
+          --settings coverlet.runsettings
+        publishTestResults: true
+
+    - task: PublishCodeCoverageResults@1
+      displayName: 'Publish code coverage'
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: '$(Agent.TempDirectory)/TestResults/**/coverage.cobertura.xml'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish application'
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        arguments: >
+          --no-build 
+          --configuration $(buildConfiguration) 
+          --output $(Build.ArtifactStagingDirectory)
+        zipAfterPublish: true
+        modifyOutputPath: false
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish build artifacts'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: '$(artifactName)'
+        publishLocation: 'Container'
+
+- stage: Security
+  displayName: 'Security Analysis'
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - job: SecurityScan
+    displayName: 'Security Scanning'
+    pool:
+      vmImage: $(vmImageName)
+    
+    steps:
+    - checkout: self
+    
+    - task: UseDotNet@2
+      displayName: 'Use .NET SDK $(dotnetSdkVersion)'
+      inputs:
+        packageType: 'sdk'
+        version: '$(dotnetSdkVersion)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore for security scan'
+      inputs:
+        command: 'restore'
+        projects: '**/*.csproj'
+
+    - task: security-scan@0
+      displayName: 'Run Credential Scanner'
+      inputs:
+        toolMajorVersion: 'V2'
+
+    - task: ComponentGovernanceComponentDetection@0
+      displayName: 'Component Detection'
+      inputs:
+        scanType: 'Register'
+        verbosity: 'Verbose'
+        alertWarningLevel: 'High'
+
+    - task: AntiMalware@4
+      displayName: 'Anti-Malware Scan'
+      inputs:
+        InputType: 'Basic'
+        ScanType: 'CustomScan'
+        FileDirPath: '$(Build.StagingDirectory)'
+        EnableServices: true
+        SupportLogOnError: true
+        TreatSignatureUpdateFailureAs: 'Warning'
+        SignatureFreshness: 'UpToDate'
+        TreatStaleSignatureAs: 'Error'
+
+- stage: Deploy_Dev
+  displayName: 'Deploy to Development'
+  dependsOn: 
+  - Build
+  - Security
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+  variables:
+    environmentName: 'development'
+  jobs:
+  - deployment: DeployToDev
+    displayName: 'Deploy to Development Environment'
+    pool:
+      vmImage: $(vmImageName)
+    environment: 'development'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: $(artifactName)
+          
+          - task: AzureWebApp@1
+            displayName: 'Deploy to Azure Web App'
+            inputs:
+              azureSubscription: 'Azure Service Connection'
+              appType: 'webApp'
+              appName: 'myapp-dev'
+              package: '$(Pipeline.Workspace)/$(artifactName)/**/*.zip'
+              deploymentMethod: 'auto'
+
+          - task: AzureAppServiceManage@0
+            displayName: 'Restart Azure Web App'
+            inputs:
+              azureSubscription: 'Azure Service Connection'
+              Action: 'Restart Azure App Service'
+              WebAppName: 'myapp-dev'
+
+- stage: Deploy_Staging
+  displayName: 'Deploy to Staging'
+  dependsOn: 
+  - Build
+  - Security
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  variables:
+    environmentName: 'staging'
+  jobs:
+  - deployment: DeployToStaging
+    displayName: 'Deploy to Staging Environment'
+    pool:
+      vmImage: $(vmImageName)
+    environment: 'staging'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: $(artifactName)
+          
+          - task: AzureWebApp@1
+            displayName: 'Deploy to Azure Web App'
+            inputs:
+              azureSubscription: 'Azure Service Connection'
+              appType: 'webApp'
+              appName: 'myapp-staging'
+              package: '$(Pipeline.Workspace)/$(artifactName)/**/*.zip'
+              deploymentMethod: 'auto'
+
+          - task: AzureAppServiceManage@0
+            displayName: 'Restart Azure Web App'
+            inputs:
+              azureSubscription: 'Azure Service Connection'
+              Action: 'Restart Azure App Service'
+              WebAppName: 'myapp-staging'
+
+- stage: Deploy_Production
+  displayName: 'Deploy to Production'
+  dependsOn: Deploy_Staging
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  variables:
+    environmentName: 'production'
+  jobs:
+  - deployment: DeployToProduction
+    displayName: 'Deploy to Production Environment'
+    pool:
+      vmImage: $(vmImageName)
+    environment: 'production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: $(artifactName)
+          
+          - task: AzureWebApp@1
+            displayName: 'Deploy to Azure Web App'
+            inputs:
+              azureSubscription: 'Azure Service Connection'
+              appType: 'webApp'
+              appName: 'myapp-prod'
+              package: '$(Pipeline.Workspace)/$(artifactName)/**/*.zip'
+              deploymentMethod: 'auto'
+              slotName: 'staging'
+
+          - task: AzureAppServiceManage@0
+            displayName: 'Swap deployment slots'
+            inputs:
+              azureSubscription: 'Azure Service Connection'
+              Action: 'Swap Slots'
+              WebAppName: 'myapp-prod'
+              ResourceGroupName: 'myapp-rg'
+              SourceSlot: 'staging'
+              TargetSlot: 'production'
+
+# AI Enhancement Prompts:
+# - "Add integration with SonarCloud for code quality analysis"
+# - "Include database migration tasks for Entity Framework"
+# - "Add performance testing stage with Azure Load Testing"
+# - "Include notification tasks for Teams or Slack"
+# - "Add infrastructure deployment with ARM templates or Bicep"
+# - "Include smoke tests after deployment"
+# - "Add rollback strategy for failed deployments"
+# - "Include blue-green deployment pattern"

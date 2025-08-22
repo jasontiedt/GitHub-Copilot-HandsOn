@@ -1,9 +1,11 @@
 # xUnit Testing Lab Exercises - Step by Step Guide
 
-## 🚀 Exercise 1: Basic Calculator Tests (15 minutes)
+**⏱️ Duration**: 1-1.5 hours | **📊 Difficulty**: Beginner to Intermediate
+
+## 🚀 Exercise 1: Basic Calculator Tests (20 minutes)
 
 ### Goal
-Learn basic xUnit testing patterns and use AI to extend test coverage.
+Learn basic xUnit testing patterns and develop your own AI prompting skills for test generation.
 
 ### Steps
 1. **Examine existing tests** in `CalculatorTests.cs`
@@ -12,228 +14,235 @@ Learn basic xUnit testing patterns and use AI to extend test coverage.
    dotnet test --logger "console;verbosity=detailed"
    ```
 
-3. **Use AI to add missing tests**. Try these prompts:
-
-   **Prompt 1: Edge Cases**
-   ```
-   Generate xUnit tests for Calculator.Divide that cover these edge cases:
-   - Very large numbers
-   - Very small decimal numbers
-   - Dividing zero by a number
-   - Dividing by very small numbers close to zero
-   Use descriptive test names and the AAA pattern
-   ```
-
-   **Prompt 2: Parameterized Tests**
-   ```
-   Create Theory tests for Calculator.Multiply using InlineData that test:
-   - Positive × Positive
-   - Negative × Negative  
-   - Positive × Negative
-   - Zero scenarios
-   - Decimal precision
-   Include at least 8 test cases
-   ```
+3. **🤖 Your AI Challenge**: Use your own prompts to add missing tests
+   - Look at the `Calculator.Divide` method - what edge cases need testing?
+   - Think about the `Calculator.Multiply` method - what scenarios should be covered?
+   - **Try writing your own prompts first** before looking at the hints below!
+   
+   💡 **Your Task**: Create tests for:
+   - Division edge cases (large numbers, small decimals, zero scenarios)
+   - Multiplication with different number combinations
+   - Use both regular `[Fact]` tests and `[Theory]` tests with `[InlineData]`
 
 4. **Verify your tests pass**:
    ```bash
    dotnet test tests/Library.Tests/CalculatorTests.cs
    ```
 
+   <details>
+   <summary>💡 Click here if you need prompting hints</summary>
+   
+   **Hint for Edge Cases**:
+   Try asking AI: "What edge cases should I test for a calculator division method?"
+   
+   **Hint for Parameterized Tests**:
+   Try asking AI: "Help me create Theory tests for multiplication with different scenarios"
+   
+   **Hint for Test Structure**:
+   Try asking AI: "Show me how to write xUnit tests using the AAA pattern"
+   </details>
+
 ### Success Criteria
 - [ ] All tests pass
-- [ ] Added at least 5 new test methods
+- [ ] Added at least 3 new test methods using your own AI prompts
 - [ ] Covered edge cases for division
 - [ ] Used Theory tests with multiple scenarios
+- [ ] Demonstrated understanding of effective AI prompting
 
 ---
 
 ## 🏦 Exercise 2: Bank Account Business Logic (25 minutes)
 
 ### Goal
-Complete comprehensive tests for business logic with validation rules.
+Complete comprehensive tests for business logic with validation rules using your own AI prompting skills.
 
 ### Steps
 1. **Review the BankAccount class** in `src/Library/BankAccount.cs`
 2. **Examine partial tests** in `BankAccountTests.cs`
 
-3. **Complete constructor tests** using this prompt:
-   ```
-   Generate xUnit tests for BankAccount constructor that verify:
-   - Empty/null account holder throws ArgumentException
-   - Negative initial balance throws ArgumentException  
-   - Zero initial balance creates account with no transactions
-   - Valid parameters create account correctly
-   Test both the exception message and exception type
-   ```
+3. **🤖 Your AI Challenge**: Create comprehensive tests using your own prompts
+   
+   **Think about these scenarios first**:
+   - What should happen when creating a BankAccount with invalid parameters?
+   - How should withdrawals behave with insufficient funds?
+   - What edge cases exist for transfers between accounts?
+   
+   💡 **Your Task**: Write AI prompts to generate tests for:
+   - Constructor validation (null names, negative balances, etc.)
+   - Withdrawal edge cases (insufficient funds, invalid amounts)
+   - Transfer functionality (null accounts, insufficient funds, transaction records)
 
-4. **Add withdrawal tests** with this prompt:
-   ```
-   Create comprehensive xUnit tests for BankAccount.Withdraw method:
-   - Valid withdrawal decreases balance correctly
-   - Insufficient funds throws InvalidOperationException
-   - Zero/negative amounts throw ArgumentException
-   - Overdraft scenarios when IsOverdraftAllowed = true
-   - Exceeding overdraft limit throws exception
-   - Withdrawal creates correct transaction record
-   Include edge cases and verify transaction history
-   ```
+4. **Experiment with different prompt styles**:
+   - Try asking for specific test categories
+   - Request tests that cover both success and failure scenarios
+   - Ask for tests that verify transaction history
 
-5. **Add transfer tests** using AI:
-   ```
-   Generate xUnit tests for BankAccount.Transfer method that verify:
-   - Successful transfer updates both account balances
-   - Transfer to null account throws ArgumentNullException
-   - Insufficient funds in source account throws exception
-   - Transaction descriptions include account numbers
-   - Transfer amount validation
-   Use helper methods to create test accounts
-   ```
-
-6. **Run tests and fix any issues**:
+5. **Run tests and fix any issues**:
    ```bash
    dotnet test tests/Library.Tests/BankAccountTests.cs -v normal
    ```
 
+   <details>
+   <summary>💡 Click here if you need prompting guidance</summary>
+   
+   **Constructor Testing Hint**:
+   Try asking: "What validation should I test for a BankAccount constructor?"
+   
+   **Business Logic Hint**:
+   Try asking: "Help me create tests for withdrawal methods that handle business rules"
+   
+   **Transfer Testing Hint**:
+   Try asking: "What scenarios should I test when transferring money between bank accounts?"
+   
+   **Exception Testing Hint**:
+   Try asking: "Show me how to test that specific exceptions are thrown in xUnit"
+   </details>
+
 ### Success Criteria
 - [ ] All constructor validation tests pass
-- [ ] Withdrawal logic fully tested
+- [ ] Withdrawal logic fully tested using your own AI prompts
 - [ ] Transfer functionality verified
 - [ ] Transaction history tests included
-- [ ] Overdraft scenarios covered
+- [ ] Demonstrated creative and effective AI prompting
 
 ---
 
-## 🛒 Exercise 3: E-commerce Shopping Cart TDD (30 minutes)
+## 🛒 Exercise 3: E-commerce Shopping Cart TDD (25 minutes)
 
 ### Goal
-Practice test-driven development by implementing tests first, then verifying against existing code.
+Practice test-driven development by implementing tests first using your own AI prompting strategies.
 
 ### Steps
 1. **Start with an empty test file** (`ShoppingCartTests.cs` has minimal content)
 
-2. **Generate comprehensive test structure** with this prompt:
-   ```
-   Generate a complete xUnit test class for ShoppingCart with these test categories:
+2. **🤖 Your AI Challenge**: Create a complete test suite using TDD principles
    
-   1. Constructor & Properties Tests:
-      - New cart is empty, has zero items
-      - IsEmpty property works correctly
-   
-   2. Add Item Tests:
-      - Adding valid product increases item count
-      - Adding null product throws ArgumentNullException
-      - Adding existing product increases quantity
-      - Zero/negative quantity throws ArgumentException
-   
-   3. Remove Item Tests:
-      - Removing existing item works
-      - Removing non-existent item returns false
-      - Partial quantity removal
-      - Complete item removal
-   
-   4. Calculation Tests:
-      - Subtotal calculation with multiple items
-      - Discount application with valid/invalid codes
-      - Total calculation with tax
-      - Empty cart calculations return zero
-   
-   Use helper methods to create test products. Include Theory tests where appropriate.
-   ```
+   **Think about the ShoppingCart functionality**:
+   - How should an empty cart behave?
+   - What happens when you add/remove items?
+   - How should calculations work (subtotal, tax, total)?
+   - What edge cases exist?
 
-3. **Add advanced scenarios** with this prompt:
-   ```
-   Add xUnit tests for ShoppingCart edge cases:
-   - Products with zero price
-   - Very large quantities
-   - Decimal precision in price calculations
-   - Multiple products same category
-   - Cart summary functionality
-   - Clearing cart operations
-   Use parameterized tests for discount codes
-   ```
+3. **Develop your own prompting strategy**:
+   - Start by asking AI to help you understand what to test
+   - Request test structure and organization advice
+   - Ask for specific test scenarios based on your analysis
+   - Experiment with different ways to phrase your requests
 
-4. **Run your tests** to verify they work with the existing implementation:
+   💡 **Your Task**: Create comprehensive tests for:
+   - Cart initialization and properties
+   - Adding items (valid products, duplicates, invalid inputs)
+   - Removing items (existing, non-existent, partial removal)
+   - Price calculations (empty cart, multiple items, edge cases)
+
+4. **Practice different prompting techniques**:
+   - Ask for test categories first, then specific tests
+   - Request both positive and negative test scenarios
+   - Try asking for helper methods to make tests cleaner
+   - Experiment with asking for Theory tests vs individual Facts
+
+5. **Verify against the existing implementation**:
    ```bash
-   dotnet test tests/Library.Tests/ShoppingCartTests.cs
+   dotnet test tests/Library.Tests/ShoppingCartTests.cs -v normal
    ```
 
-5. **If tests fail**, use AI to debug:
-   ```
-   My ShoppingCart test is failing with this error: [paste error]
-   Here's my test code: [paste test]
-   Help me fix the test to match the actual ShoppingCart implementation
-   ```
+   <details>
+   <summary>💡 Click here for prompting strategy hints</summary>
+   
+   **Getting Started Hint**:
+   Try asking: "What should I test for an e-commerce shopping cart class?"
+   
+   **Test Organization Hint**:
+   Try asking: "How should I organize xUnit tests for a shopping cart with multiple methods?"
+   
+   **Edge Cases Hint**:
+   Try asking: "What edge cases should I consider when testing shopping cart functionality?"
+   
+   **TDD Approach Hint**:
+   Try asking: "Help me write tests first for shopping cart functionality using TDD approach"
+   
+   </details>
 
 ### Success Criteria
-- [ ] Complete test coverage for all public methods
-- [ ] Tests verify business rules (discounts, tax calculation)
-- [ ] Edge cases handled properly
-- [ ] Helper methods reduce code duplication
-- [ ] All tests pass with existing implementation
+- [ ] All tests pass using your own AI-generated prompts
+- [ ] Created comprehensive test structure through TDD approach
+- [ ] Covered all major shopping cart functionality
+- [ ] Used effective helper methods and test organization
+- [ ] Demonstrated mastery of AI prompting for testing scenarios
+- [ ] Successfully applied test-driven development principles
 
 ---
 
-## 🌤️ Exercise 4: Mocking External Dependencies (25 minutes)
+## � Bonus Challenge: Advanced Testing Scenarios (Optional)
 
 ### Goal
-Learn to test code with external dependencies using Moq framework.
+For students who finish early - explore advanced testing concepts with AI assistance.
 
-### Steps
-1. **Study the existing WeatherService tests** to understand mocking patterns
+### Your AI Exploration Challenge
+**Pick one area to explore using your own AI prompts**:
 
-2. **Add HTTP timeout tests** with this prompt:
-   ```
-   Generate xUnit tests for WeatherService that test timeout scenarios:
-   - HTTP request timeout throws WeatherServiceException
-   - Cancelled operations handle CancellationToken properly
-   - Long-running requests are cancelled appropriately
-   Use Moq to simulate network delays and timeouts
-   ```
+1. **Async Testing**: How would you test async methods in the codebase?
+2. **Exception Testing**: What's the best way to verify specific exceptions are thrown?
+3. **Performance Testing**: How could you write tests that verify performance requirements?
+4. **Integration Testing**: How would you test multiple components working together?
 
-3. **Test retry logic thoroughly** using this prompt:
-   ```
-   Create xUnit tests that verify WeatherService retry behavior:
-   - Verify exact number of retry attempts (should be 3)
-   - Test exponential backoff timing between retries
-   - Ensure successful request on retry stops further attempts
-   - Verify different HTTP status codes trigger appropriate behavior
-   Use Mock.Verify to check call counts and timing
-   ```
+**🤖 Your Mission**: 
+- Formulate your own questions about advanced testing scenarios
+- Use AI to learn about xUnit features you haven't used yet
+- Try implementing one advanced testing pattern you discover
+- Experiment with different ways to ask AI for testing advice
 
-4. **Add malformed response tests**:
-   ```
-   Generate tests for WeatherService handling invalid responses:
-   - Malformed JSON throws appropriate exception
-   - Empty response body handling
-   - Missing required fields in JSON
-   - Invalid data types in response
-   Mock HttpClient to return various malformed responses
-   ```
-
-5. **Verify HTTP request details**:
-   ```
-   Create tests that verify WeatherService makes correct HTTP requests:
-   - Correct URL format with API key and city
-   - Proper URL encoding for city names with spaces/special chars
-   - Request headers are set correctly
-   - HTTP method is GET
-   Use ItExpr.Is<HttpRequestMessage> to verify request properties
-   ```
-
-6. **Run and validate your tests**:
-   ```bash
-   dotnet test tests/Library.Tests/WeatherServiceTests.cs -v normal
-   ```
-
-### Success Criteria
-- [ ] Mock setup correctly simulates HTTP responses
-- [ ] Retry logic thoroughly tested
-- [ ] Exception scenarios covered
-- [ ] HTTP request verification included
-- [ ] Async patterns handled properly
+   <details>
+   <summary>💡 Click here for exploration ideas</summary>
+   
+   **Async Testing Ideas**:
+   - "How do I test async methods in xUnit?"
+   - "Show me best practices for testing async/await code"
+   
+   **Exception Testing Ideas**:
+   - "What's the difference between Assert.Throws and Assert.ThrowsAsync?"
+   - "How can I verify exception messages in xUnit tests?"
+   
+   **Performance Testing Ideas**:
+   - "How can I write tests that verify method execution time?"
+   - "Show me how to test memory usage in xUnit"
+   
+   **Integration Testing Ideas**:
+   - "How do I test multiple classes working together in xUnit?"
+   - "What's the difference between unit tests and integration tests?"
+   </details>
 
 ---
+
+## 📈 Success Metrics
+
+After completing all exercises, you should have:
+- ✅ Mastered AI prompting for test generation
+- ✅ Created comprehensive test coverage using your own prompts
+- ✅ Applied TDD principles with AI assistance
+- ✅ Developed confidence in xUnit testing patterns
+- ✅ Demonstrated creative problem-solving with AI
+- ✅ Built well-organized, maintainable test code
+
+## 🎓 What You've Learned
+
+### Core Testing Skills:
+- **xUnit Fundamentals**: Facts, Theories, Assertions, Test Organization
+- **Test-Driven Development**: Red-Green-Refactor cycle with AI assistance
+- **Edge Case Testing**: Comprehensive scenario coverage
+- **Business Logic Validation**: Testing complex rules and workflows
+
+### AI Integration Skills:
+- **Effective Prompting**: How to ask AI for testing help
+- **Independent Problem-Solving**: Developing your own prompting strategies
+- **AI-Assisted TDD**: Using AI as a testing partner, not a crutch
+- **Critical Thinking**: Evaluating and improving AI-generated code
+
+### Next Steps:
+1. **Apply these skills** to your own projects
+2. **Experiment** with more advanced xUnit features
+3. **Share your prompting strategies** with your team
+4. **Continue practicing** AI-assisted development workflows
 
 ## 🎯 Exercise 5: Test Coverage Analysis (15 minutes)
 

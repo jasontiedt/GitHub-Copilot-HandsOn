@@ -1,53 +1,68 @@
 # Quick Start Guide - Copilot Mastery Lab
 
-## 5-Minute Quick Start
+Welcome! This lab will teach you to become highly effective with GitHub Copilot. Choose your learning path based on available time.
 
-### Step 1: Choose Your Learning Path (1 minute)
-- **New to AI coding?** → Start with `/exercises/BasicPrompting/`
-- **Want to compare models?** → Jump to `/src/ModelComparison/`
-- **Interested in interaction modes?** → Go to `/exercises/ModeComparison/`
-- **Need practical templates?** → Check `/templates/prompt-templates.md`
+## ⚡ 5-Minute Quick Start
 
-### Step 2: Set Up Your Environment (2 minutes)
-1. Ensure GitHub Copilot is active in VS Code
-2. Open this lab folder in VS Code
-3. Run `dotnet restore` in the terminal
-4. Open any `.cs` file to activate Copilot
+### Step 1: Verify Setup (1 minute)
+1. **Open VS Code** in this lab folder
+2. **Check Copilot status** in bottom-right of VS Code (should show Copilot icon)
+3. **If Copilot isn't active**: Click the icon and sign in to GitHub
 
-### Step 3: Try Your First Exercise (2 minutes)
-Open `/src/PromptingExamples/PromptingPlayground.cs` and try this:
+### Step 2: Test Basic Functionality (2 minutes)
+1. **Create a new file** called `test.cs`
+2. **Type this comment**: `// Create a function that calculates compound interest`
+3. **Press Enter** and wait for Copilot to suggest code
+4. **Press Tab** to accept the suggestion
+5. **Success?** You're ready! **No suggestion?** Check Step 1 again.
 
-```csharp
-// Create a method that validates email addresses using regex
-// Return true if valid, false if invalid
-// Include validation for @ symbol, domain, and basic format
-```
+### Step 3: Try Your First Real Exercise (2 minutes)
+1. **Open** `/src/PromptingExamples/PromptingPlayground.cs`
+2. **Find the comment** that says `// TODO: Your first exercise`
+3. **Replace it with**: 
+   ```csharp
+   // Create a method that validates email addresses using regex
+   // Return true if valid, false if invalid
+   // Include validation for @ symbol, domain, and basic format
+   ```
+4. **Watch Copilot generate** the method automatically!
+5. **Compare** what it created to what you expected
 
-Watch Copilot generate the method and compare it to what you expected!
+**🎉 Congratulations!** You've completed your first AI-assisted coding task.
 
-## 15-Minute Deep Dive
+## 🚀 15-Minute Deep Dive
 
-### Minutes 1-5: Basic Prompting Practice
-1. Open `/exercises/BasicPrompting/README.md`
-2. Complete Exercise 1: Prompt Clarity Comparison
-3. Try both poor and good prompts
-4. Document the differences you observe
+### Minutes 1-5: Learn Effective Prompting
+1. **Open** `/exercises/BasicPrompting/README.md`
+2. **Read** the "Good vs Bad Prompts" section
+3. **Try both examples** in your playground file:
+   - Poor prompt: `// validate email`
+   - Good prompt: `// Create a robust email validation method that checks for @ symbol, domain format, and common email rules`
+4. **Notice the difference** in code quality and completeness
 
-### Minutes 6-10: Model Comparison
-1. Open `/src/ModelComparison/ModelComparisonPlayground.cs`
-2. Try the same prompt with different models:
-   - Ask GPT-4 in Chat
-   - Use Claude for code review
-   - Use base Copilot for quick implementation
-3. Compare the responses
+### Minutes 6-10: Compare AI Models
+1. **Open Chat** (Ctrl+Shift+I in VS Code)
+2. **Ask the same question to different models**:
+   - "Create a shopping cart class with add/remove items functionality"
+3. **Try these models** (use @ symbol in Chat):
+   - `@workspace` - Uses your project context
+   - Choose GPT-4 or Claude from model selector
+4. **Compare responses** - which gave better code structure?
 
-### Minutes 11-15: Interaction Modes
-1. Pick one task (e.g., "create a shopping cart class")
-2. Try implementing it three ways:
-   - **Chat**: Discuss approach first
-   - **Edit**: Start with basic code, enhance iteratively
-   - **Agent**: Provide complete requirements
-3. Note which approach felt most natural
+### Minutes 11-15: Explore Interaction Modes
+**Pick one task**: "Create a simple calculator class"
+
+**Try each mode**:
+1. **Chat Mode**: 
+   - Ask "How should I structure a calculator class?"
+   - Discuss the approach before coding
+2. **Edit Mode**: 
+   - Start with `public class Calculator { }`
+   - Use inline suggestions to enhance it
+3. **Agent Mode**: 
+   - Give complete requirements: "Create a calculator class with add, subtract, multiply, divide methods, error handling, and unit tests"
+
+**Reflect**: Which mode felt most natural for this task?
 
 ## 30-Minute Comprehensive Introduction
 

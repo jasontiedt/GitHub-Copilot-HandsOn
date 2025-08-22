@@ -1,0 +1,176 @@
+# .NET CI/CD Pipeline Template for GitHub Actions
+# This template provides a complete CI/CD workflow for .NET applications
+# Customize using AI prompts for your specific requirements
+
+name: .NET CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  BUILD_CONFIGURATION: 'Release'
+  ARTIFACT_NAME: 'webapp-artifacts'
+
+jobs:
+  # Build and test job
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for better analysis
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Check code formatting
+      run: dotnet format --verify-no-changes --verbosity diagnostic
+
+    - name: Build application
+      run: dotnet build --no-restore --configuration ${{ env.BUILD_CONFIGURATION }}
+
+    - name: Run unit tests
+      run: |
+        dotnet test --no-build --configuration ${{ env.BUILD_CONFIGURATION }} \
+          --logger trx --results-directory TestResults \
+          --collect:"XPlat Code Coverage" \
+          --settings coverlet.runsettings
+
+    - name: Publish test results
+      uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: Test Results
+        path: TestResults/*.trx
+        reporter: dotnet-trx
+
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v4
+      with:
+        directory: TestResults
+        flags: unittests
+        name: code-coverage-report
+
+    - name: Publish application
+      run: |
+        dotnet publish --no-build --configuration ${{ env.BUILD_CONFIGURATION }} \
+          --output ./publish
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: ./publish
+        retention-days: 30
+
+  # Security scanning job
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: csharp
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Build for CodeQL
+      run: |
+        dotnet restore
+        dotnet build --configuration ${{ env.BUILD_CONFIGURATION }}
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+
+    - name: Run dependency scan
+      uses: anchore/sbom-action@v0
+      with:
+        path: ./
+        format: spdx-json
+        upload-artifact: true
+
+  # Container build job (optional)
+  container-build:
+    name: Build Container
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: ./publish
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log in to Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ghcr.io/${{ github.repository }}
+        tags: |
+          type=ref,event=branch
+          type=sha
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+# AI Enhancement Prompts:
+# - "Add deployment stages for staging and production environments"
+# - "Include performance testing with NBomber or k6"
+# - "Add integration with Azure App Service deployment"
+# - "Include database migration steps"
+# - "Add Slack or Teams notifications for build status"
+# - "Include environment-specific configuration management"
+# - "Add manual approval gates for production deployment"

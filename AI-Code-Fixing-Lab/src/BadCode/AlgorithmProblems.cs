@@ -31,17 +31,20 @@ namespace BadCode
             }
         }
 
-        // ISSUE #2: Linear search when data could be sorted first
-        // Also doesn't handle duplicates or edge cases properly
+        // FIXED: Binary search for O(log n) performance
+        // Sorts the list first, then uses efficient binary search
         public static int FindNumber(List<int> numbers, int target)
         {
-            // No null check!
-            for (int i = 0; i < numbers.Count; i++)
-            {
-                if (numbers[i] == target)
-                    return i;
-            }
-            return -1; // Magic number, unclear meaning
+            if (numbers == null || numbers.Count == 0) return -1;
+            
+            // Sort the list first for binary search
+            numbers.Sort();
+            
+            // Use built-in binary search
+            int index = numbers.BinarySearch(target);
+            
+            // BinarySearch returns negative value if not found
+            return index >= 0 ? index : -1;
         }
 
         // ISSUE #3: Recursive factorial with no memoization and stack overflow risk
